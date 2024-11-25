@@ -75,6 +75,35 @@ void Postorder(PNODE Head)
     }
 }
 
+bool Search(PNODE Head, int iNo)
+{
+    bool flag = false;
+
+    if(Head == NULL)
+    {
+        printf("Tree is empty \n");
+        return flag;
+    }
+
+    while(Head != NULL)
+    {
+        if(iNo == Head -> data)
+        {
+            flag = true;
+            break;
+        }
+        else if(iNo > Head -> data)
+        {
+            Head = Head -> rchild;
+        }
+        else if(iNo < Head -> data)
+        {
+            Head = Head -> lchild;
+        }
+    }
+    return flag;
+}
+
 void Inorder(PNODE Head)
 {
     if(Head != NULL)
@@ -85,35 +114,6 @@ void Inorder(PNODE Head)
     }
 }
 
-bool Search(PNODE Head, int No)
-{
-    bool flag = false;
-
-    if(Head == NULL)
-    {
-        printf("Tree is empty\n");
-        return flag;
-    }
-
-    while(Head != NULL)
-    {
-        if( No == Head -> data)
-        {
-            flag = true;
-            break;
-        }
-        else if(No > Head -> data)
-        {
-            Head = Head -> rchild;
-        }
-        else if(No < Head -> data)
-        {
-            Head = Head -> lchild;
-        }
-    }
-    return flag;
-}
-
 int CountNodes(PNODE Head)
 {
     static int iCnt = 0;
@@ -121,8 +121,8 @@ int CountNodes(PNODE Head)
     if(Head != NULL)
     {
         iCnt++;
-        CountNodes(Head->lchild);
-        CountNodes(Head->rchild);
+        CountNodes(Head -> lchild);
+        CountNodes(Head -> rchild);
     }
 
     return iCnt;
@@ -134,14 +134,13 @@ int CountLeafNodes(PNODE Head)
 
     if(Head != NULL)
     {
-        if((Head->lchild == NULL) && (Head->rchild == NULL))
+        if((Head -> lchild == NULL) && (Head -> rchild == NULL))
         {
             iCnt++;
         }
         CountLeafNodes(Head->lchild);
         CountLeafNodes(Head->rchild);
     }
-
     return iCnt;
 }
 
@@ -168,14 +167,14 @@ int main()
     bool bRet = false;
 
     Insert(&First,21);
-    Insert(&First,23);
+    Insert(&First,25);
     Insert(&First,15);
     Insert(&First,78);
-    Insert(&First,45);
+    Insert(&First,56);
     Insert(&First,10);
-    Insert(&First,90);
-    Insert(&First,18);
-    Insert(&First,7);
+    Insert(&First,55);
+    Insert(&First,34);
+    Insert(&First,20); 
 
     printf("\nElements in Preorder format : \n");
     Preorder(First);
@@ -186,7 +185,7 @@ int main()
     printf("\nElements in Inorder format : \n");
     Inorder(First);
 
-    bRet = Search(First,516);
+    bRet = Search(First,56);
     if(bRet == true)
     {
         printf("\nElement is there in BST\n");
@@ -197,9 +196,7 @@ int main()
     }
 
     printf("Number of nodes are : %d\n",CountNodes(First));
-    
     printf("Number of leaf nodes are : %d\n",CountLeafNodes(First));
-
     printf("Number of parent nodes are : %d\n",CountParentNodes(First));
 
     return 0;
